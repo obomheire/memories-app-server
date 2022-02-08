@@ -3,12 +3,12 @@
 // import DeleteIcon from '@material-ui/icons/Delete';
 // import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 // import moment from 'moment';
-// import useStyles from './styles'
+import useStyles from './styles'
 // import { useDispatch } from 'react-redux'
 // import { deletePost  } from '../../../actions/posts';
 
 const Post = ({ post, setCurrentId }) => {
-    // // const classes = useStyles()
+    const classes = useStyles()
     //  const {card, media, overlay, overlay2, details, title, cardActions } = useStyles()
     //  const dispatch = useDispatch()
     
