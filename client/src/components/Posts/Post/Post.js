@@ -13,8 +13,8 @@ const Post = ({ post, setCurrentId }) => {
 
     const defaultImage = (image) =>{
         if (image) return image
-        else image = "https://images.theconversation.com/files/76631/original/image-20150331-1256-mz95ed.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=926&fit=clip"
-        return image
+        return "https://images.theconversation.com/files/76631/original/image-20150331-1256-mz95ed.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=926&fit=clip"
+    
     }
     
     return (
