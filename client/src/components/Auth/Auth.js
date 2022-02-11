@@ -1,5 +1,6 @@
 import { useState } from 'react';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Avatar, Button, Paper, Grid, Typography, Container} from '@material-ui/core';
 // import { useHistory } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
@@ -16,6 +17,8 @@ import Input from './Input'
       const classes = useStyles()
       const [showPassword, setShowPassword] = useState(false);
       const [isSignUp, setIsSignup] = useState(false)
+      const dispatch = useDispatch()
+      const navigate = useNavigate()
 
       const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword)
     
@@ -32,8 +35,16 @@ import Input from './Input'
       };
     
 
-      const googleSuccess = (res) => {
-        console.log(res)
+      const googleSuccess = async (res) => {
+        const result = res?.profileObj
+        const token = res?.tokenId 
+
+        try{
+          dispatch({ type: 'AUTH', data: { result, token }})
+          navigate('/')
+        }catch(error){
+          console.log(error)
+        }
       }
 
       const googleFailure = (error) => {
