@@ -8,30 +8,40 @@ import Icon from './Icon'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import useStyles from './styles';
 import Input from './Input'
+import { signin, signup } from '../../actions/auth';
+const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
 
     const Auth = () => {
 
-
       const GOOGLE_ID = process.env.REACT_APP_GOOGLE_ID;
       const classes = useStyles()
       const [showPassword, setShowPassword] = useState(false);
-      const [isSignUp, setIsSignup] = useState(false)
+      const [isSignup, setisSignup] = useState(false)
+      const [formData, setFormData] = useState(initialState);
       const dispatch = useDispatch()
       const navigate = useNavigate()
 
       const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword)
     
-      const handleSubmit = () => {
+      const handleSubmit = (e) => {
+        e.preventDefault();
     
-      }
-      const handleChange = () => {
+        if (isSignup) {
+          dispatch(signup(formData, navigate));
+        } else {
+          dispatch(signin(formData, navigate));
+        }
+      };
+
+      const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value})
 
       }
 
       const switchMode = () => {
-        setIsSignup((prevIsSignup) => !prevIsSignup);
-        handleShowPassword(false);
+        setisSignup((previsSignup) => !previsSignup);
+        setShowPassword(false);
       };
     
 
@@ -59,10 +69,10 @@ import Input from './Input'
       <Avatar className={classes.avatar}>
         <LockOutlinedIcon />
       </Avatar>
-      <Typography component="h1" variant="h5">{ isSignUp ? 'Sign up' : 'Sign in' }</Typography>
+      <Typography component="h1" variant="h5">{ isSignup ? 'Sign up' : 'Sign in' }</Typography>
       <form className={classes.form} onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          { isSignUp && (
+          { isSignup && (
           <>
             <Input name="firstName" label="First Name" handleChange={handleChange} autoFocus half />
             <Input name="lastName" label="Last Name" handleChange={handleChange} half />
@@ -70,10 +80,10 @@ import Input from './Input'
           )}
           <Input name="email" label="Email Address" handleChange={handleChange} type="email" />
           <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
-          { isSignUp && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" /> }
+          { isSignup && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" /> }
         </Grid>
         <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
-          { isSignUp ? 'Sign Up' : 'Sign In' }
+          { isSignup ? 'Sign Up' : 'Sign In' }
         </Button>
         <GoogleLogin
             clientId={GOOGLE_ID}
@@ -89,7 +99,7 @@ import Input from './Input'
         <Grid container justifyContent='flex-end'>
           <Grid item>
             <Button onClick={switchMode}>
-              {isSignUp ? 'Already have an account? Sign In' : "Don't have an account Sign Up"}
+              {isSignup ? 'Already have an account? Sign In' : "Don't have an account Sign Up"}
             </Button>
           </Grid>
         </Grid>
