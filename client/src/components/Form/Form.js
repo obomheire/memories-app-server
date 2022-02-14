@@ -7,28 +7,29 @@ import useStyles from './styles'
 
 const Form = ({ currentId, setCurrentId}) => {
   const [postData, setPostData] = useState({ title: '', message: '', tags: '', selectedFile: ''})
-  const post = useSelector((state) => (currentId ? state.posts.find((p) => p._id === currentId) : null));
-  const user = JSON.parse(localStorage.getItem('profile'))
+  const post = useSelector((state) => (currentId ? state.posts.find((p) => p._id === currentId) : null))
+
   const classes = useStyles()
   const dispatch = useDispatch()
+  const user = JSON.parse(localStorage.getItem('profile'))
 
   useEffect(() => {
   if(post) setPostData(post)
 }, [post])
 
 const clear = () => {
-  setCurrentId(0);
+  setCurrentId(null);
   setPostData({ title: '', message: '', tags: '', selectedFile: '' });
 };
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if(currentId === 0) {
-      dispatch(createPost({ ...postData, name: user?.result?.name}))
+    if(currentId) {
+      dispatch(updatePost(currentId, { ...postData, name: user?.result?.name}))
       clear()
     }
-    else dispatch(updatePost(currentId, { ...postData, name: user?.result?.name}))
+    else dispatch(createPost({ ...postData, name: user?.result?.name}))
     clear()
   }
 

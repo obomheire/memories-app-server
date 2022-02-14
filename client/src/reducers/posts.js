@@ -1,4 +1,5 @@
 import { CREATE, UPDATE, DELETE, FETCH_ALL} from '../constants/actionTypes'
+
 const reducer = (posts = [], action) => {
     switch (action.type){
         case DELETE:
