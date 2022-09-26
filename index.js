@@ -18,7 +18,7 @@ app.use('/user', userRoutes)
 
 app.get("/", (req, res) => { 
   res.send({
-    Status: "Server is running",
+    Status: "Running",
     Message: "Hello from Memories API",
   });
 })
