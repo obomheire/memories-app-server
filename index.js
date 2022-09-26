@@ -19,7 +19,7 @@ app.use('/user', userRoutes)
 app.get("/", (req, res) => { 
   res.send({
     Status: "Server is running",
-    Message: "Hello to Memories API",
+    Message: "Hello from Memories API",
   });
 })
 const PORT = process.env.PORT|| 5000;
